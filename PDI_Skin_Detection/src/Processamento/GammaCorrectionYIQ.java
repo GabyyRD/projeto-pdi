@@ -25,9 +25,9 @@ public class GammaCorrectionYIQ {
     
     public static BufferedImage applyGamma(BufferedImage Imagem, Tela_Espaco_cor Tela) {
         int Gamma_Value  = (int) Tela.Gamma_Value.getValue();
-        int width = Imagem.getWidth();
-        int height = Imagem.getHeight();
-        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        //int width = Imagem.getWidth();
+        //int height = Imagem.getHeight();
+        //BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < Imagem.getWidth(); i++) {
             for (int j = 0; j < Imagem.getHeight(); j++) {
@@ -45,19 +45,19 @@ public class GammaCorrectionYIQ {
                 // g = (int) (255 * Math.pow(g / 255.0, gamma));
                 // b = (int) (255 * Math.pow(b / 255.0, gamma));
 
-                int rn = (int) Math.round(255 * Math.pow((r / 255.0), gamma));
-                int gn = (int) Math.round(255 * Math.pow((g / 255.0), gamma));
-                int bn = (int) Math.round(255 * Math.pow((b / 255.0), gamma));
+                int rn = (int) Math.round(255 * Math.pow((r / 255.0), Gamma_Value));
+                int gn = (int) Math.round(255 * Math.pow((g / 255.0), Gamma_Value));
+                int bn = (int) Math.round(255 * Math.pow((b / 255.0), Gamma_Value));
 
                 rn = Math.min(255, Math.max(0, rn));
                 gn = Math.min(255, Math.max(0, gn));
                 bn = Math.min(255, Math.max(0, bn));
 
                 int newPixel = (rn << 16) | (gn << 8) | bn;
-                output.setRGB(i, j, newPixel);
+                Imagem.setRGB(i, j, newPixel);
             }
         }
-        return output;
+        return Imagem;
     }
 //    public static BufferedImage applyGamma(BufferedImage Imagem, double gamma) {;
 //        int width = Imagem.getWidth();
@@ -95,48 +95,7 @@ public class GammaCorrectionYIQ {
 //        return output;
 //    }
 
-    public static void main(String[] args) {
-        try {
-            File cwd = new File(".");
-            System.out.println("Current working directory;");
-            System.out.println(cwd.getAbsolutePath());
-            System.out.println();
 
-            String filename = "rosto.jpg"; //FIXED - deve estar dentro
-
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Coloque nome da imagem ou url: ");
-            filename = sc.nextLine().trim();
-            sc.close();
-
-            File imgFile = new File(filename);
-            System.out.println("Imagem: " + imgFile.getAbsolutePath());
-
-            if(!imgFile.exists()) {
-                System.err.println("Erro: Arquivo não encontrado.");
-                System.err.println(cwd.getAbsolutePath());
-                return;
-            }
-
-            BufferedImage input = ImageIO.read(imgFile);
-            if(input == null) {
-                System.err.println("Erro: Não foi possível ler a imagem. Verifique o formato do arquivo.");
-                return;
-            }
-
-            double[] gammas = {0.4, 1.0, 2.5};
-            for (double gamma: gammas) {
-                BufferedImage out = applyGamma(input, gamma);
-                String outName = "output_gamma_" + gamma + ".jpg";
-                ImageIO.write(out, "jpg", new File(outName));
-                System.out.println("Salva: " + new File(outName).getAbsolutePath());
-            }
-
-            System.out.println("Processamento concluído.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     /*public static BufferedImage Detection(BufferedImage Imagem,Tela_Espaco_cor Tela) {
     
         int Ymin  = (int) Tela.Ymin.getValue();
