@@ -6,6 +6,7 @@ package Processamento;
 import Telas.Tela_Espaco_cor;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import Telas.Tela_Gamma_YIQ;
 
 
 import java.awt.image.BufferedImage;
@@ -23,8 +24,11 @@ public class GammaCorrectionYIQ {
         por Gabrielly Dionisio e Felipe Morais - 2026/1.
     */
     
-    public static BufferedImage applyGamma(BufferedImage Imagem, Tela_Espaco_cor Tela) {
-        int Gamma_Value  = (int) Tela.Gamma_Value.getValue();
+    public static BufferedImage applyGamma(BufferedImage Imagem, Tela_Gamma_YIQ Tela) {
+        //double gamma  = (double) Tela.spinnerGamma.getValue();
+        //double c  = (double) Tela.spinnerC.getValue();
+        double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
+        double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
         //int width = Imagem.getWidth();
         //int height = Imagem.getHeight();
         //BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -45,9 +49,15 @@ public class GammaCorrectionYIQ {
                 // g = (int) (255 * Math.pow(g / 255.0, gamma));
                 // b = (int) (255 * Math.pow(b / 255.0, gamma));
 
+                /*
+                C CONSTANTE 
                 int rn = (int) Math.round(255 * Math.pow((r / 255.0), Gamma_Value));
                 int gn = (int) Math.round(255 * Math.pow((g / 255.0), Gamma_Value));
-                int bn = (int) Math.round(255 * Math.pow((b / 255.0), Gamma_Value));
+                int bn = (int) Math.round(255 * Math.pow((b / 255.0), Gamma_Value));*/
+                int rn = (int) Math.round(c *255 * Math.pow((r / 255.0), gamma));
+                int gn = (int) Math.round(c * 255 * Math.pow((g / 255.0), gamma));
+                int bn = (int) Math.round(c * 255 * Math.pow((b / 255.0), gamma));
+                
 
                 rn = Math.min(255, Math.max(0, rn));
                 gn = Math.min(255, Math.max(0, gn));

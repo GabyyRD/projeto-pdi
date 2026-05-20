@@ -17,6 +17,7 @@ import Processamento.Processamento_Imagem_;
  */
 public class Tela_Aplicacao_Lote_ extends javax.swing.JFrame {
     public Tela_Espaco_cor telaEspacoCor;
+    public Tela_Gamma_YIQ telaGamma;
     public boolean Aplicar_deteccao = false;
     
     // Nome do metodo a ser aplicado.
@@ -37,6 +38,7 @@ public class Tela_Aplicacao_Lote_ extends javax.swing.JFrame {
         initComponents();
         Mensagem_Aviso_.setVisible(false);
     }
+  
     
     /**
      * Creates new form TelaPostPasta
@@ -44,6 +46,12 @@ public class Tela_Aplicacao_Lote_ extends javax.swing.JFrame {
      */
     public Tela_Aplicacao_Lote_(Tela_Espaco_cor Tela) {   
         this.telaEspacoCor = Tela;
+        initComponents();
+        Mensagem_Aviso_.setVisible(false);
+    }
+    
+    public Tela_Aplicacao_Lote_(Tela_Gamma_YIQ Tela) {
+        this.telaGamma = Tela;
         initComponents();
         Mensagem_Aviso_.setVisible(false);
     }
@@ -355,9 +363,11 @@ public class Tela_Aplicacao_Lote_ extends javax.swing.JFrame {
                                         Img_Processada = Processamento_Imagem_.YCbCr(Img_Processada, telaEspacoCor);
                                     if(telaEspacoCor.Deteccao_tipo < 1)
                                         Img_Processada = Processamento_Imagem_.XYZ(Img_Processada, telaEspacoCor);    
-                                }else
+                                }else if(telaGamma != null){
+                                    Img_Processada = Processamento_Imagem_.Gamma_YIQ(Img_Processada, telaGamma);
+                                }else{
                                     Img_Processada = Processamento_Imagem_.Segment_(Img_original, Segmentacao_tipo);
-                                                           
+                                }                      
                                 // Salva a imagem processada.
                                 File Fo = new File(Pasta_destino.getPath() +"/" +Arquivos.getName().substring(0, Arquivos.getName().length() - 4) +Metodo_nome +".png");
                                 ImageIO.write(Img_Processada, "png", Fo);

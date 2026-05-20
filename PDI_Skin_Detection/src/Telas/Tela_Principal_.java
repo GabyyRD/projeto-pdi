@@ -28,6 +28,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     public BufferedImage Img_final_atual;
     public File Caminho = new File("/home/");
     public boolean Img_YCbCr, Img_XYZ, Img_segmentada;
+    public boolean Img_Gamma, Img_C;
     
     /**
      * Creates new form TelaPrincipal
@@ -165,7 +166,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Aplicar_Gamma_Imagem_.setPreferredSize(new java.awt.Dimension(150, 25));
         Aplicar_Gamma_Imagem_.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Aplicar_Imagem_ActionPerformed(evt);
+                Aplicar_Gamma_Imagem_ActionPerformed(evt);
             }
         });
         Menu_Gamma_YIQ_.add(Aplicar_Gamma_Imagem_);
@@ -652,29 +653,31 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Img_XYZ = false;
     }//GEN-LAST:event_Aplicar_Imagem_ActionPerformed
     
-    public void Aplicar_GammaCorrectionYIQ_Imagem(Tela_Espaco_cor Tela){
+    private void Aplicar_Gamma_Imagem_ActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        Tela_Gamma_YIQ Tela = new Tela_Gamma_YIQ(this, false);
+        Tela.setLocationRelativeTo(null);
+        Tela.setVisible(true);
+        Img_Gamma = false;
+        Img_C = false;
+    }    
+    
+    public void Aplicar_GammaCorrectionYIQ_Imagem(Tela_Gamma_YIQ Tela){
         javax.swing.JDialog F = new javax.swing.JDialog();
-
+         System.out.println("cheguei no aplica gamma correction");
         if(Img_carregada){
-            
+            System.out.println("passei do if img carregada");
             try{
                 
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
-                if(Tela.Ymin.isEnabled() || Tela.Cbmin.isEnabled() || Tela.Crmin.isEnabled()){
-                    Img_processada = Processamento_Imagem_.Gamma_YIQ(Img_processada, Tela);
-                    Img_YCbCr = true;
-                }
-                if(Tela.Xmin.isEnabled() || Tela.Yxyzmin.isEnabled() || Tela.Zmin.isEnabled()){
-                    Img_processada = Processamento_Imagem_.Gamma_YIQ(Img_processada, Tela);
-                    Img_XYZ = true;
-                }
-                
+                Img_processada = Processamento_Imagem_.Gamma_YIQ(Img_processada, Tela);
+                Img_Gamma = true;
+                Img_C = true;
                 Img_processada_atual = Img_processada;
-                
+                System.out.println("img processada atual = img processada");
                 if(Img_processada_atual == null) {
 
-                    JOptionPane.showMessageDialog(F, "Não foi possível aplicar a deteccao de pele!");
+                    JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma!");
                 }else{
 
                        // ---------- NOVA JANELA COM A IMAGEM PROCESSADA ----------                                  
@@ -683,12 +686,14 @@ public class Tela_Principal_ extends javax.swing.JFrame {
 
                     JScrollPane scrollPane = new JScrollPane(imageLabel);
 
-                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada" + 
-                        (Img_YCbCr ? " YCbCr [" : "")+
-                        (Tela.Ymin.isEnabled() ? "Y" : "")+(Tela.Cbmin.isEnabled() ? "Cb" : "")+(Tela.Crmin.isEnabled() ? "Cr" : "")
-                         + (Img_YCbCr&&Img_XYZ ? "] e" : "") + (Img_XYZ ? " XYZ [" : "")+
-                        (Tela.Xmin.isEnabled() ? "X" : "")+(Tela.Yxyzmin.isEnabled() ? "Y" : "")+(Tela.Zmin.isEnabled() ? "Z" : "")
-                            +("]"),true,true,true,true);
+                    JInternalFrame novaJanela =
+                            new JInternalFrame(
+                                "Imagem Processada - Gamma YIQ",
+                                true,
+                                true,
+                                true,
+                                true
+                        );
                     novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                     novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
                     novaJanela.getContentPane().add(scrollPane);
@@ -701,7 +706,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                 }
             }catch( NullPointerException | IllegalArgumentException ex){
 
-                JOptionPane.showMessageDialog(F, "Não foi possível aplicar a deteccao de pele!");
+                JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma!");
                 Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
@@ -867,6 +872,13 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Tela.setLocationRelativeTo(null);
         if(TelaCor.Deteccao_tipo == 0) Tela.Metodo_nome = "_YCbCrXYZ";
         else Tela.Metodo_nome = (TelaCor.Deteccao_tipo == 1 ? "_YCbCr" : "_XYZ");
+        Tela.setVisible(true);   
+    }
+    
+    public void Aplicar_GammaCorrectionYIQ_Lote(Tela_Gamma_YIQ TelaCor) {
+        Tela_Aplicacao_Lote_ Tela = new Tela_Aplicacao_Lote_(TelaCor);
+        Tela.setLocationRelativeTo(null);
+        Tela.Metodo_nome = "_GammaYIQ";
         Tela.setVisible(true);   
     }
     

@@ -12,12 +12,18 @@ import javax.swing.JOptionPane;
 public class Tela_Gamma_YIQ extends javax.swing.JFrame {
     public Tela_Principal_ telaPrincipal;
     public static boolean lote;
-    public int    Deteccao_tipo = 0;
+    public int Deteccao_tipo = 0;
+    
+    //public double valorGamma = 1.0;
+    // Valores padrões
+    public double gamma = 1.0;
+    public double c = 1.0;
 
     public Tela_Gamma_YIQ(Tela_Principal_ parent, boolean lote) {
         this.telaPrincipal = parent;
         this.lote = lote;
         initComponents();
+        System.out.println("CRIANDO GAMMA com lote = " + lote);
     }
 
     /**
@@ -55,13 +61,20 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        
+        lblGamma = new javax.swing.JLabel();
+        lblC = new javax.swing.JLabel();
+        spinnerGamma = new javax.swing.JSpinner();
+        spinnerC = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Interface de detecção de pele");
+        setTitle("Transformação Gamma");
         setIconImages(null);
         setResizable(false);
 
         Confirmar.setText("OK");
+        System.out.println("BOTÃO OK lote = " + lote);
+        
         Confirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConfirmarActionPerformed(evt);
@@ -72,10 +85,15 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
         jPanel1.setToolTipText("");
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.setName(""); // NOI18N
+        
+        // ---------- LABELS ----------
+        lblGamma.setText("Gamma (γ):");
 
-        YCbCr.setForeground(new java.awt.Color(0, 0, 204));
+        lblC.setText("Constante C:");
+
+        /*YCbCr.setForeground(new java.awt.Color(0, 0, 204));
         YCbCr.setSelected(true);
-        YCbCr.setText("YCbCr");
+        YCbCr.setText("Gamma");
         YCbCr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 YCbCrActionPerformed(evt);
@@ -83,22 +101,22 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
         });
 
         XYZ.setForeground(new java.awt.Color(204, 0, 0));
-        XYZ.setText("XYZ");
+        XYZ.setText("C");
         XYZ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 XYZActionPerformed(evt);
             }
-        });
+        });*/
 
-        Ambos.setText("Ambos");
+        /*Ambos.setText("Ambos");
         Ambos.setToolTipText("");
         Ambos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AmbosActionPerformed(evt);
             }
-        });
+        });*/
 
-        Y.setForeground(new java.awt.Color(0, 0, 204));
+        /*Y.setForeground(new java.awt.Color(0, 0, 204));
         Y.setSelected(true);
         Y.setText("Y");
         Y.addActionListener(new java.awt.event.ActionListener() {
@@ -147,9 +165,12 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ZActionPerformed(evt);
             }
-        });
+        });*/
 
-        Ymin.setModel(new javax.swing.SpinnerNumberModel(85, 0, 255, 1));
+        spinnerGamma.setModel(new javax.swing.SpinnerNumberModel(1.0, 0.1, 10, 0.1));
+        spinnerC.setModel(new javax.swing.SpinnerNumberModel(1, 0, 255, 1));
+        
+        /*Ymin.setModel(new javax.swing.SpinnerNumberModel(85, 0, 255, 1));
 
         Ymax.setModel(new javax.swing.SpinnerNumberModel(135, 0, 255, 1));
         Ymax.setToolTipText("");
@@ -178,160 +199,161 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
         Zmin.setEnabled(false);
 
         Zmax.setModel(new javax.swing.SpinnerNumberModel(278, 0, 278, 1));
-        Zmax.setEnabled(false);
+        Zmax.setEnabled(false);*/
 
-        jLabel1.setText("Mín");
+        /*jLabel1.setText("Gamma");
 
-        jLabel2.setText("Máx");
+        jLabel2.setText("C");*/
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        javax.swing.GroupLayout jPanel1Layout =
+            new javax.swing.GroupLayout(jPanel1);
+
         jPanel1.setLayout(jPanel1Layout);
+
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel1Layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING
+            )
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(YCbCr)
-                                    .addComponent(XYZ))
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Y)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(X)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addGap(1, 1, 1)
-                                            .addComponent(Yxyz)))
-                                    .addComponent(Cb)
-                                    .addComponent(Cr)))
-                            .addComponent(Ambos))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Z)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Ymin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Cbmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(Crmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Cbmax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Ymax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Crmax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(20, 20, 20))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Zmin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Yxyzmin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Xmin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Xmax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Yxyzmax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Zmax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(24, 24, 24))
+                .addGap(20, 20, 20)
+
+                .addGroup(jPanel1Layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.LEADING
+                )
+                    .addComponent(lblGamma)
+                    .addComponent(lblC)
+                )
+
+                .addGap(20, 20, 20)
+
+                .addGroup(jPanel1Layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.LEADING
+                )
+                    .addComponent(
+                        spinnerGamma,
+                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                        80,
+                        javax.swing.GroupLayout.PREFERRED_SIZE
+                    )
+
+                    .addComponent(
+                        spinnerC,
+                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                        80,
+                        javax.swing.GroupLayout.PREFERRED_SIZE
+                    )
+                )
+
+                .addContainerGap(20, Short.MAX_VALUE)
+            )
         );
+
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel1Layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING
+            )
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Ymin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Ymax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Y, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Cbmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Cbmax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Cb)
-                            .addComponent(YCbCr))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Crmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Crmax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Cr))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Xmax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Xmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(X))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(Ambos)
-                                .addGap(33, 33, 33)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(Yxyzmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Yxyzmax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(Yxyz)
-                                .addComponent(XYZ)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Zmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Zmax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Z))
-                .addContainerGap())
+
+                .addGap(20, 20, 20)
+
+                .addGroup(jPanel1Layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.BASELINE
+                )
+                    .addComponent(lblGamma)
+
+                    .addComponent(
+                        spinnerGamma,
+                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE
+                    )
+                )
+
+                .addGap(20, 20, 20)
+
+                .addGroup(jPanel1Layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.BASELINE
+                )
+                    .addComponent(lblC)
+
+                    .addComponent(
+                        spinnerC,
+                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE
+                    )
+                )
+
+                .addContainerGap(20, Short.MAX_VALUE)
+            )
         );
 
-        Ymin.getAccessibleContext().setAccessibleName("");
-        Ymin.getAccessibleContext().setAccessibleDescription("");
+        javax.swing.GroupLayout layout =
+            new javax.swing.GroupLayout(getContentPane());
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Seleção do espaço de cor e das faixas de valores ");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
+
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING
+            )
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+
+                .addGroup(layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.TRAILING,
+                    false
+                )
+
                     .addComponent(Confirmar)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
+
+                    .addComponent(
+                        jPanel1,
+                        javax.swing.GroupLayout.Alignment.LEADING,
+                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                        Short.MAX_VALUE
+                    )
+                )
+
+                .addGap(10, 10, 10)
+            )
         );
+
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Confirmar)
-                .addGap(10, 10, 10))
+            layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING
+            )
+            .addGroup(
+                javax.swing.GroupLayout.Alignment.TRAILING,
+                layout.createSequentialGroup()
+
+                    .addContainerGap()
+
+                    .addComponent(
+                        jPanel1,
+                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE
+                    )
+
+                    .addPreferredGap(
+                        javax.swing.LayoutStyle.ComponentPlacement.RELATED
+                    )
+
+                    .addComponent(Confirmar)
+
+                    .addGap(10, 10, 10)
+            )
         );
 
         pack();
-    }// </editor-fold>                        
+    }                      
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {                                          
         javax.swing.JDialog F = new javax.swing.JDialog();
         
-        if(Y.isSelected() || Cb.isSelected()   || Cr.isSelected() || 
+        /*if(Y.isSelected() || Cb.isSelected()   || Cr.isSelected() || 
            X.isSelected() || Yxyz.isSelected() || Z.isSelected()){
             
             if(Y.isSelected() || Cb.isSelected()   || Cr.isSelected())
@@ -346,6 +368,37 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
             this.dispose();
         }else{
             JOptionPane.showMessageDialog(F, "Nenhuma opção foi selecionada!");
+        }
+        */
+        try {
+            // pega os valores dos spinners
+            //gamma = (Double) spinnerGamma.getValue();
+            //c = (Double) spinnerC.getValue();
+            gamma = ((Number) spinnerGamma.getValue()).doubleValue();
+            c = ((Number) spinnerC.getValue()).doubleValue();
+           
+            // validações
+            if(gamma <= 0 || c <= 0){
+                JOptionPane.showMessageDialog(
+                    F,
+                    "Gamma e C devem ser maiores que zero!"
+                );
+                return;
+
+            }
+            // chama processamento
+            if(!lote)
+                telaPrincipal.Aplicar_GammaCorrectionYIQ_Imagem(this);
+            else
+                telaPrincipal.Aplicar_GammaCorrectionYIQ_Lote(this);
+            this.dispose();
+            
+        } catch(Exception ex){
+
+            JOptionPane.showMessageDialog(
+                F,
+                "Valores inválidos!"
+            );
         }
     }                                         
 
@@ -482,7 +535,7 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela_Espaco_cor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Gamma_YIQ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         
@@ -490,12 +543,14 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            Tela_Espaco_cor dialog = new Tela_Espaco_cor(null,lote);
+            Tela_Gamma_YIQ dialog = new Tela_Gamma_YIQ(null,lote);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         });
     }
 
+   // public javax.swing.JSpinner Gamma_Value;
+    //public javax.swing.JSpinner C_Value;
     // Variables declaration - do not modify                     
     private javax.swing.JCheckBox Ambos;
     private javax.swing.JCheckBox Cb;
@@ -523,5 +578,10 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    
+    private javax.swing.JLabel lblGamma;
+    private javax.swing.JLabel lblC;
+    public javax.swing.JSpinner spinnerGamma;
+    public javax.swing.JSpinner spinnerC;
     // End of variables declaration                   
 }

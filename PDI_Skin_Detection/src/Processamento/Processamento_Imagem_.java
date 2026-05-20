@@ -2,6 +2,7 @@ package Processamento;
 
 import Telas.Tela_Espaco_cor;
 import java.awt.image.BufferedImage;
+import Telas.Tela_Gamma_YIQ;
 
 /**
  * @author 
@@ -46,7 +47,7 @@ public class Processamento_Imagem_ {
         
         
         
-        public static BufferedImage Gamma_YIQ(BufferedImage Imagem,Tela_Espaco_cor Tela){
+        public static BufferedImage Gamma_YIQ(BufferedImage Imagem,Tela_Gamma_YIQ Tela){
             
             // Aplicacao do algoritmo.
             return GammaCorrectionYIQ.applyGamma(Imagem, Tela);
