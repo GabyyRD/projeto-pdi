@@ -18,6 +18,7 @@ import Processamento.Processamento_Imagem_;
 public class Tela_Aplicacao_Lote_ extends javax.swing.JFrame {
     public Tela_Espaco_cor telaEspacoCor;
     public Tela_Gamma_YIQ telaGamma;
+    public Tela_Gamma_Cinza telaGammaCinza;
     public boolean Aplicar_deteccao = false;
     
     // Nome do metodo a ser aplicado.
@@ -52,6 +53,12 @@ public class Tela_Aplicacao_Lote_ extends javax.swing.JFrame {
     
     public Tela_Aplicacao_Lote_(Tela_Gamma_YIQ Tela) {
         this.telaGamma = Tela;
+        initComponents();
+        Mensagem_Aviso_.setVisible(false);
+    }
+    
+    public Tela_Aplicacao_Lote_(Tela_Gamma_Cinza Tela) {
+        this.telaGammaCinza = Tela;
         initComponents();
         Mensagem_Aviso_.setVisible(false);
     }
@@ -365,6 +372,9 @@ public class Tela_Aplicacao_Lote_ extends javax.swing.JFrame {
                                         Img_Processada = Processamento_Imagem_.XYZ(Img_Processada, telaEspacoCor);    
                                 }else if(telaGamma != null){
                                     Img_Processada = Processamento_Imagem_.Gamma_YIQ(Img_Processada, telaGamma);
+                                }else if(telaGammaCinza != null){
+                                    // Chama o processamento do Gamma em Níveis de Cinza
+                                    Img_Processada = Processamento_Imagem_.Gamma_Cinza(Img_Processada, telaGammaCinza);
                                 }else{
                                     Img_Processada = Processamento_Imagem_.Segment_(Img_original, Segmentacao_tipo);
                                 }                      

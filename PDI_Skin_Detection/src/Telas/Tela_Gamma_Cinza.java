@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 /**
  * @author Lucas Sala Alves
  */
-public class Tela_Gamma_YIQ extends javax.swing.JFrame {
+public class Tela_Gamma_Cinza extends javax.swing.JFrame {
     public Tela_Principal_ telaPrincipal;
     public static boolean lote;
     public int Deteccao_tipo = 0;
@@ -19,7 +19,7 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
     public double gamma = 1.0;
     public double c = 1.0;
 
-    public Tela_Gamma_YIQ(Tela_Principal_ parent, boolean lote) {
+    public Tela_Gamma_Cinza(Tela_Principal_ parent, boolean lote) {
         this.telaPrincipal = parent;
         this.lote = lote;
         initComponents();
@@ -388,9 +388,9 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
             }
             // chama processamento
             if(!lote)
-                telaPrincipal.Aplicar_GammaCorrectionYIQ_Imagem(this);
+                telaPrincipal.Aplicar_GammaCinza_Imagem(this);
             else
-                telaPrincipal.Aplicar_GammaCorrectionYIQ_Lote(this);
+                telaPrincipal.Aplicar_GammaCinza_Lote(this);
             this.dispose();
             
         } catch(Exception ex){
@@ -535,15 +535,16 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela_Gamma_YIQ.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Gamma_Cinza.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            Tela_Gamma_YIQ dialog = new Tela_Gamma_YIQ(null,lote);
+            Tela_Gamma_Cinza dialog = new Tela_Gamma_Cinza(null,lote);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         });

@@ -310,9 +310,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Detec&#xe7;&#xe3;o de pele humana em imagens - Lucas Sala Alves"/>
+    <Property name="title" type="java.lang.String" value="Aplica&#xe7;&#xe3;o da Transforma&#xe7;&#xe3;o Gamma - Felipe Morais e Gabrielly Dion&#xed;sio"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Default Cursor"/>
+      <Color id="Cursor Padr&#xe3;o"/>
     </Property>
     <Property name="extendedState" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="MAXIMIZED_BOTH" type="code"/>

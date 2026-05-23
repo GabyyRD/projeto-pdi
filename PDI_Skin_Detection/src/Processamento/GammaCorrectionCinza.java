@@ -6,7 +6,7 @@ package Processamento;
 import Telas.Tela_Espaco_cor;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import Telas.Tela_Gamma_YIQ;
+import Telas.Tela_Gamma_Cinza;
 
 
 import java.awt.image.BufferedImage;
@@ -19,57 +19,42 @@ import javax.imageio.ImageIO;
  *
  * @author 
  */
-public class GammaCorrectionYIQ {   
+public class GammaCorrectionCinza {   
     /*  Algoritmo de Transformação Gamma, desenvolvido
         por Gabrielly Dionisio e Felipe Morais - 2026/1.
     */
     
-    public static BufferedImage applyGamma(BufferedImage Imagem, Tela_Gamma_YIQ Tela) {
-        //double gamma  = (double) Tela.spinnerGamma.getValue();
-        //double c  = (double) Tela.spinnerC.getValue();
+    public static BufferedImage applyGamma(BufferedImage Imagem, Tela_Gamma_Cinza Tela) {
+        
+        // Pega os valores dos spinners
         double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
         double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
-        //int width = Imagem.getWidth();
-        //int height = Imagem.getHeight();
-        //BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < Imagem.getWidth(); i++) {
             for (int j = 0; j < Imagem.getHeight(); j++) {
-                /*int rgb = image.getRGB(x, y);
-                int r = (rgb >> 16) & 0xFF;
-                int g = (rgb >> 8) & 0xFF;
-                int b = rgb & 0xFF;*/
                 
+                // Preserva o alpha, para imagens .png
                 Color C = new Color(Imagem.getRGB(i, j), true);
-                int a = C.getAlpha(); // necessário para tratarmos o alpha em imagens .png
-                double r = Double.valueOf(C.getRed());
-                double g = Double.valueOf(C.getGreen());
-                double b = Double.valueOf(C.getBlue());
-
-                // r = (int) (255 * Math.pow(r / 255.0, gamma));
-                // g = (int) (255 * Math.pow(g / 255.0, gamma));
-                // b = (int) (255 * Math.pow(b / 255.0, gamma));
-
-                /*
-                C CONSTANTE 
-                int rn = (int) Math.round(255 * Math.pow((r / 255.0), Gamma_Value));
-                int gn = (int) Math.round(255 * Math.pow((g / 255.0), Gamma_Value));
-                int bn = (int) Math.round(255 * Math.pow((b / 255.0), Gamma_Value));*/
-                int rn = (int) Math.round(c *255 * Math.pow((r / 255.0), gamma));
-                int gn = (int) Math.round(c * 255 * Math.pow((g / 255.0), gamma));
-                int bn = (int) Math.round(c * 255 * Math.pow((b / 255.0), gamma));
+                int a = C.getAlpha(); 
                 
+                // Pegando o tom de apenas um canal, pois em níveis de cinza R = G = B.
+                double tom = Double.valueOf(C.getRed());
 
-                rn = Math.min(255, Math.max(0, rn));
-                gn = Math.min(255, Math.max(0, gn));
-                bn = Math.min(255, Math.max(0, bn));
+                // Aplicando a fórmula do Gamma para o tom
+                int novoTom = (int) Math.round(c * 255 * Math.pow((tom / 255.0), gamma));
 
-                int newPixel = (a << 24) | (rn << 16) | (gn << 8) | bn;
+                // Garantia de que o valor vai estar entre 0 a 255.
+                novoTom = Math.min(255, Math.max(0, novoTom));
+
+                // Remontagem dos pixels da imagem
+                int newPixel = (a << 24) | (novoTom << 16) | (novoTom << 8) | novoTom;
                 Imagem.setRGB(i, j, newPixel);
             }
         }
+        
         return Imagem;
     }
+}
 //    public static BufferedImage applyGamma(BufferedImage Imagem, double gamma) {;
 //        int width = Imagem.getWidth();
 //        int height = Imagem.getHeight();

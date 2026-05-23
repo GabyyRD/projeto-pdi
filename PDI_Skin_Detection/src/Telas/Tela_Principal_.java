@@ -61,12 +61,16 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Sair_ = new javax.swing.JMenuItem();
         Menu_Skin_Detection_ = new javax.swing.JMenu();
         Menu_Gamma_YIQ_ = new javax.swing.JMenu();
+        Menu_Gamma_Cinza_ = new javax.swing.JMenu();
         Aplicar_Imagem_ = new javax.swing.JMenuItem();
         Aplicar_Gamma_Imagem_ = new javax.swing.JMenuItem();
+        Aplicar_GammaCinza_Imagem_ = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         Aplicar_Lote_ = new javax.swing.JMenuItem();
         Aplicar_Gamma_Lote_ = new javax.swing.JMenuItem();
+        Aplicar_GammaCinza_Lote_ = new javax.swing.JMenuItem();
         Menu_Segmentacao_ = new javax.swing.JMenu();
         Binarizacao_Otsu_ = new javax.swing.JMenu();
         Aplicar_Otsu_Imagem_ = new javax.swing.JMenuItem();
@@ -91,7 +95,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         jMenuItem15.setText("jMenuItem15");
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Detecção de pele humana em imagens - Lucas Sala Alves");
+        setTitle("Aplicação da Transformação Gamma - Felipe Morais e Gabrielly Dionísio");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(MAXIMIZED_BOTH);
         setLocation(new java.awt.Point(0, 0));
@@ -177,12 +181,42 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Aplicar_Gamma_Lote_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         Aplicar_Gamma_Lote_.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Aplicar_Lote_ActionPerformed(evt);
+                Aplicar_Gamma_Lote_ActionPerformed(evt);
             }
         });
         Menu_Gamma_YIQ_.add(Aplicar_Gamma_Lote_);
 
         Menus.add(Menu_Gamma_YIQ_);
+        
+        Menu_Gamma_Cinza_.setBorder(null);
+        Menu_Gamma_Cinza_.setText("Gamma Cinza");
+        Menu_Gamma_Cinza_.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        Menu_Gamma_Cinza_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        Menu_Gamma_Cinza_.setPreferredSize(new java.awt.Dimension(120, 25));
+
+        Aplicar_GammaCinza_Imagem_.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        Aplicar_GammaCinza_Imagem_.setText("Aplicar na Imagem");
+        Aplicar_GammaCinza_Imagem_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        Aplicar_GammaCinza_Imagem_.setPreferredSize(new java.awt.Dimension(150, 25));
+        Aplicar_GammaCinza_Imagem_.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aplicar_GammaCinza_Imagem_ActionPerformed(evt);
+            }
+        });
+        Menu_Gamma_Cinza_.add(Aplicar_GammaCinza_Imagem_);
+        Menu_Gamma_Cinza_.add(jSeparator3);
+
+        Aplicar_GammaCinza_Lote_.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        Aplicar_GammaCinza_Lote_.setText("Aplicar em Lote");
+        Aplicar_GammaCinza_Lote_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        Aplicar_GammaCinza_Lote_.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aplicar_GammaCinza_Lote_ActionPerformed(evt);
+            }
+        });
+        Menu_Gamma_Cinza_.add(Aplicar_GammaCinza_Lote_);
+
+        Menus.add(Menu_Gamma_Cinza_);
         
         Menu_Skin_Detection_.setBorder(null);
         Menu_Skin_Detection_.setText("Skin Detection");
@@ -350,7 +384,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         jMenuItem15.setText("jMenuItem15");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Detecção de pele humana em imagens - Lucas Sala Alves");
+        setTitle("Aplicação da Transformação Gamma - Felipe Morais e Gabrielly Dionísio");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(MAXIMIZED_BOTH);
         setLocation(new java.awt.Point(0, 0));
@@ -633,9 +667,9 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     private void Sobre_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Sobre_ActionPerformed
         
         JFrame F = new JFrame();
-        JOptionPane.showMessageDialog(F, "Programa desenvolvido e implementado por Lucas Sala Alves"
-                                       + "\nem 2025/1, na disciplina de Processamento Digital de Imagens"
-                                       + "\nministrada pelo Prof. Jacques Facon.");
+        JOptionPane.showMessageDialog(F, "Programa desenvolvido e implementado por Felipe Morais e Gabrielly Dionísio"
+                                       + "\nem 2026/1, na disciplina de Processamento Digital de Imagens, ministrada"
+                                       + "\npelo Prof. Jacques Facon.");
     }//GEN-LAST:event_Sobre_ActionPerformed
 
     
@@ -660,6 +694,12 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Img_Gamma = false;
         Img_C = false;
     }    
+    
+    private void Aplicar_GammaCinza_Imagem_ActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        Tela_Gamma_Cinza Tela = new Tela_Gamma_Cinza(this, false);
+        Tela.setLocationRelativeTo(null);
+        Tela.setVisible(true);
+    }
     
     public void Aplicar_GammaCorrectionYIQ_Imagem(Tela_Gamma_YIQ Tela){
         javax.swing.JDialog F = new javax.swing.JDialog();
@@ -713,6 +753,46 @@ public class Tela_Principal_ extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(F, "Nenhuma imagem foi carregada!");
         }
         
+    }
+    
+    public void Aplicar_GammaCinza_Imagem(Tela_Gamma_Cinza Tela){
+        javax.swing.JDialog F = new javax.swing.JDialog();
+        
+        if(Img_carregada){
+            try{
+                // Aplica o algoritmo na copia da imagem atual.
+                BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
+                
+                Img_processada = Processamento_Imagem_.Gamma_Cinza(Img_processada, Tela);
+                
+                Img_processada_atual = Img_processada;
+                
+                if(Img_processada_atual == null) {
+                    JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma Cinza!");
+                }else{
+                    // ---------- NOVA JANELA COM A IMAGEM PROCESSADA ----------                                  
+                    JLabel imageLabel = new JLabel();
+                    imageLabel.setIcon(new javax.swing.ImageIcon(Img_processada));
+                    JScrollPane scrollPane = new JScrollPane(imageLabel);
+
+                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma Cinza", true, true, true, true);
+                    novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+                    novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
+                    novaJanela.getContentPane().add(scrollPane);
+                    novaJanela.setVisible(true);
+                    
+                    jDesktopPane1.add(novaJanela);
+                    jDesktopPane1.setLayer(novaJanela, javax.swing.JLayeredPane.DEFAULT_LAYER,0);
+                   
+                    Img_final_atual = Img_processada;                    
+                }
+            }catch( Exception ex){
+                JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma Cinza!");
+                Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(F, "Nenhuma imagem foi carregada!");
+        }
     }
     
     public void Aplicar_SkinDetection_Imagem(Tela_Espaco_cor Tela){
@@ -882,6 +962,27 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Tela.setVisible(true);   
     }
     
+    public void Aplicar_GammaCinza_Lote(Tela_Gamma_Cinza TelaCor) {
+        Tela_Aplicacao_Lote_ Tela = new Tela_Aplicacao_Lote_(TelaCor);
+        Tela.setLocationRelativeTo(null);
+        Tela.Metodo_nome = "_GammaCinza";
+        Tela.setVisible(true);   
+    }
+    
+    /* Metodo para abrir a tela Gamma Cinza em lote */
+    private void Aplicar_GammaCinza_Lote_ActionPerformed(java.awt.event.ActionEvent evt) {
+        Tela_Gamma_Cinza Tela = new Tela_Gamma_Cinza(this, true);
+        Tela.setLocationRelativeTo(null);
+        Tela.setVisible(true);
+    }
+    
+    /* Metodo para abrir a tela Gamma YIQ em lote */
+    private void Aplicar_Gamma_Lote_ActionPerformed(java.awt.event.ActionEvent evt) {
+        Tela_Gamma_YIQ Tela = new Tela_Gamma_YIQ(this, true); // 'true' indica que é aplicação em lote
+        Tela.setLocationRelativeTo(null);
+        Tela.setVisible(true);
+    }
+    
     
     /*  Metodo para aplicar o algoritmo de segmentacao
         "Binarizacao Otsu" em um lote de imagens.   */
@@ -948,6 +1049,10 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JMenuItem Aplicar_Gamma_Imagem_;
     private javax.swing.JMenuItem Aplicar_Gamma_Lote_;
+    private javax.swing.JMenu Menu_Gamma_Cinza_;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JMenuItem Aplicar_GammaCinza_Imagem_;
+    private javax.swing.JMenuItem Aplicar_GammaCinza_Lote_;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Aplicar_FuzzyHuang_Imagem_;
     private javax.swing.JMenuItem Aplicar_FuzzyHuang_Lote_;
