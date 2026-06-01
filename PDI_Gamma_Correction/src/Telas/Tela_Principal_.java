@@ -62,15 +62,19 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Menu_Skin_Detection_ = new javax.swing.JMenu();
         Menu_Gamma_YIQ_ = new javax.swing.JMenu();
         Menu_Gamma_Cinza_ = new javax.swing.JMenu();
+        Menu_Gamma_RGB_ = new javax.swing.JMenu();
         Aplicar_Imagem_ = new javax.swing.JMenuItem();
         Aplicar_Gamma_Imagem_ = new javax.swing.JMenuItem();
         Aplicar_GammaCinza_Imagem_ = new javax.swing.JMenuItem();
+        Aplicar_GammaRGB_Imagem_ = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         Aplicar_Lote_ = new javax.swing.JMenuItem();
         Aplicar_Gamma_Lote_ = new javax.swing.JMenuItem();
         Aplicar_GammaCinza_Lote_ = new javax.swing.JMenuItem();
+        Aplicar_GammaRGB_Lote_ = new javax.swing.JMenuItem();
         Menu_Segmentacao_ = new javax.swing.JMenu();
         Binarizacao_Otsu_ = new javax.swing.JMenu();
         Aplicar_Otsu_Imagem_ = new javax.swing.JMenuItem();
@@ -95,7 +99,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         jMenuItem15.setText("jMenuItem15");
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Aplicação da Transformação Gamma - Felipe Morais e Gabrielly Dionísio");
+        setTitle("Aplicação da Transformação Gamma - Felipe Morais e Gabrielly Dionisio");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(MAXIMIZED_BOTH);
         setLocation(new java.awt.Point(0, 0));
@@ -217,6 +221,36 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Menu_Gamma_YIQ_.add(Aplicar_Gamma_Lote_);
 
         Menus.add(Menu_Gamma_YIQ_);
+        
+        Menu_Gamma_RGB_.setBorder(null);
+        Menu_Gamma_RGB_.setText("Gamma RGB");
+        Menu_Gamma_RGB_.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        Menu_Gamma_RGB_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        Menu_Gamma_RGB_.setPreferredSize(new java.awt.Dimension(110, 25));
+
+        Aplicar_GammaRGB_Imagem_.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        Aplicar_GammaRGB_Imagem_.setText("Aplicar na Imagem");
+        Aplicar_GammaRGB_Imagem_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        Aplicar_GammaRGB_Imagem_.setPreferredSize(new java.awt.Dimension(150, 25));
+        Aplicar_GammaRGB_Imagem_.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aplicar_GammaRGB_Imagem_ActionPerformed(evt);
+            }
+        });
+        Menu_Gamma_RGB_.add(Aplicar_GammaRGB_Imagem_);
+        Menu_Gamma_RGB_.add(jSeparator4);
+
+        Aplicar_GammaRGB_Lote_.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        Aplicar_GammaRGB_Lote_.setText("Aplicar em Lote");
+        Aplicar_GammaRGB_Lote_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        Aplicar_GammaRGB_Lote_.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aplicar_GammaRGB_Lote_ActionPerformed(evt);
+            }
+        });
+        Menu_Gamma_RGB_.add(Aplicar_GammaRGB_Lote_);
+
+        Menus.add(Menu_Gamma_RGB_);
         
 //        Menu_Skin_Detection_.setBorder(null);
 //        Menu_Skin_Detection_.setText("Skin Detection");
@@ -681,7 +715,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     private void Sobre_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Sobre_ActionPerformed
         
         JFrame F = new JFrame();
-        JOptionPane.showMessageDialog(F, "Programa desenvolvido e implementado por Felipe Morais e Gabrielly Dionísio"
+        JOptionPane.showMessageDialog(F, "Programa desenvolvido e implementado por Felipe Morais e Gabrielly Dionisio"
                                        + "\nem 2026/1, na disciplina de Processamento Digital de Imagens, ministrada"
                                        + "\npelo Prof. Jacques Facon.");
     }//GEN-LAST:event_Sobre_ActionPerformed
@@ -711,6 +745,12 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     
     private void Aplicar_GammaCinza_Imagem_ActionPerformed(java.awt.event.ActionEvent evt) {                                                
         Tela_Gamma_Cinza Tela = new Tela_Gamma_Cinza(this, false);
+        Tela.setLocationRelativeTo(null);
+        Tela.setVisible(true);
+    }
+    
+    private void Aplicar_GammaRGB_Imagem_ActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        Tela_Gamma_RGB Tela = new Tela_Gamma_RGB(this, false);
         Tela.setLocationRelativeTo(null);
         Tela.setVisible(true);
     }
@@ -789,7 +829,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     imageLabel.setIcon(new javax.swing.ImageIcon(Img_processada));
                     JScrollPane scrollPane = new JScrollPane(imageLabel);
 
-                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma Cinza", true, true, true, true);
+                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma", true, true, true, true);
                     novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                     novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
                     novaJanela.getContentPane().add(scrollPane);
@@ -802,6 +842,46 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                 }
             }catch( Exception ex){
                 JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma Cinza!");
+                Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(F, "Nenhuma imagem foi carregada!");
+        }
+    }
+    
+    public void Aplicar_GammaRGB_Imagem(Tela_Gamma_RGB Tela){
+        javax.swing.JDialog F = new javax.swing.JDialog();
+        
+        if(Img_carregada){
+            try{
+                // Aplica o algoritmo na copia da imagem atual.
+                BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
+                
+                Img_processada = Processamento_Imagem_.Gamma_RGB(Img_processada, Tela);
+                
+                Img_processada_atual = Img_processada;
+                
+                if(Img_processada_atual == null) {
+                    JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma RGB!");
+                }else{
+                    // ---------- NOVA JANELA COM A IMAGEM PROCESSADA ----------                                  
+                    JLabel imageLabel = new JLabel();
+                    imageLabel.setIcon(new javax.swing.ImageIcon(Img_processada));
+                    JScrollPane scrollPane = new JScrollPane(imageLabel);
+
+                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma RGB", true, true, true, true);
+                    novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+                    novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
+                    novaJanela.getContentPane().add(scrollPane);
+                    novaJanela.setVisible(true);
+                    
+                    jDesktopPane1.add(novaJanela);
+                    jDesktopPane1.setLayer(novaJanela, javax.swing.JLayeredPane.DEFAULT_LAYER,0);
+                   
+                    Img_final_atual = Img_processada;                    
+                }
+            }catch( Exception ex){
+                JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma RGB!");
                 Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
@@ -979,8 +1059,15 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     public void Aplicar_GammaCinza_Lote(Tela_Gamma_Cinza TelaCor) {
         Tela_Aplicacao_Lote_ Tela = new Tela_Aplicacao_Lote_(TelaCor);
         Tela.setLocationRelativeTo(null);
-        Tela.Metodo_nome = "_GammaCinza";
+        Tela.Metodo_nome = "_Gamma";
         Tela.setVisible(true);   
+    }
+    
+    public void Aplicar_GammaRGB_Lote(Tela_Gamma_RGB TelaCor) {
+        Tela_Aplicacao_Lote_ Tela = new Tela_Aplicacao_Lote_(TelaCor);
+        Tela.setLocationRelativeTo(null);
+        Tela.Metodo_nome = "_GammaRGB";
+        Tela.setVisible(true);  
     }
     
     /* Metodo para abrir a tela Gamma Cinza em lote */
@@ -997,6 +1084,11 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         Tela.setVisible(true);
     }
     
+    private void Aplicar_GammaRGB_Lote_ActionPerformed(java.awt.event.ActionEvent evt) {
+        Tela_Gamma_RGB Tela = new Tela_Gamma_RGB(this, true);
+        Tela.setLocationRelativeTo(null);
+        Tela.setVisible(true);
+    }
     
     /*  Metodo para aplicar o algoritmo de segmentacao
         "Binarizacao Otsu" em um lote de imagens.   */
@@ -1067,6 +1159,10 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JMenuItem Aplicar_GammaCinza_Imagem_;
     private javax.swing.JMenuItem Aplicar_GammaCinza_Lote_;
+    private javax.swing.JMenu Menu_Gamma_RGB_;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JMenuItem Aplicar_GammaRGB_Imagem_;
+    private javax.swing.JMenuItem Aplicar_GammaRGB_Lote_;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Aplicar_FuzzyHuang_Imagem_;
     private javax.swing.JMenuItem Aplicar_FuzzyHuang_Lote_;

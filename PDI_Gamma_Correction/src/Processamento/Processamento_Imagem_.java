@@ -4,6 +4,7 @@ import Telas.Tela_Espaco_cor;
 import java.awt.image.BufferedImage;
 import Telas.Tela_Gamma_YIQ;
 import Telas.Tela_Gamma_Cinza;
+import Telas.Tela_Gamma_RGB;
 
 /**
  * @author 
@@ -55,5 +56,11 @@ public class Processamento_Imagem_ {
             
             // Aplicacao do algoritmo.
             return GammaCorrectionCinza.applyGamma(Imagem, Tela);
+	}
+        
+        public static BufferedImage Gamma_RGB(BufferedImage Imagem,Tela_Gamma_RGB Tela){
+            
+            // Aplicacao do algoritmo.
+            return GammaCorrectionRGB.applyGamma(Imagem, Tela);
 	}
 }
