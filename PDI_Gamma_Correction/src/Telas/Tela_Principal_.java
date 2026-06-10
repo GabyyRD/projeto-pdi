@@ -656,7 +656,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                 
                 JScrollPane scrollPane = new JScrollPane(imageLabel);
                 
-                JInternalFrame novaJanela = new JInternalFrame("Imagem Original", true,true,true,true);
+                JInternalFrame novaJanela = new JInternalFrame(Img_original.getName(), true,true,true,true);
                 novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                 novaJanela.setSize(Img_atual.getWidth(), Img_atual.getHeight());
                 novaJanela.getContentPane().add(scrollPane);
@@ -762,6 +762,19 @@ public class Tela_Principal_ extends javax.swing.JFrame {
             System.out.println("passei do if img carregada");
             try{
                 
+                double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
+                double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
+                
+                String nomeImagem = Img_original.getName();
+                
+                //Solução para remover o .png do meio do texto
+                int posicaoPonto = nomeImagem.lastIndexOf('.');
+                if (posicaoPonto > 0) {
+                    nomeImagem = nomeImagem.substring(0, posicaoPonto);
+                }
+                
+                String tituloJanela = nomeImagem + " Processada - Gamma YIQ [c: " + c + ", γ: " + gamma + "]";
+                
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
                 Img_processada = Processamento_Imagem_.Gamma_YIQ(Img_processada, Tela);
@@ -782,7 +795,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
 
                     JInternalFrame novaJanela =
                             new JInternalFrame(
-                                "Imagem Processada - Gamma YIQ",
+                                tituloJanela,
                                 true,
                                 true,
                                 true,
@@ -814,6 +827,20 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         
         if(Img_carregada){
             try{
+                
+                double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
+                double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
+                
+                String nomeImagem = Img_original.getName();
+                
+                //Solução para remover o .png do meio do texto
+                int posicaoPonto = nomeImagem.lastIndexOf('.');
+                if (posicaoPonto > 0) {
+                    nomeImagem = nomeImagem.substring(0, posicaoPonto);
+                }
+                
+                String tituloJanela = nomeImagem + " Processada - Gamma [c: " + c + ", γ: " + gamma + "]";
+                
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
                 
@@ -829,7 +856,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     imageLabel.setIcon(new javax.swing.ImageIcon(Img_processada));
                     JScrollPane scrollPane = new JScrollPane(imageLabel);
 
-                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma", true, true, true, true);
+                    JInternalFrame novaJanela = new JInternalFrame(tituloJanela, true, true, true, true);
                     novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                     novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
                     novaJanela.getContentPane().add(scrollPane);
@@ -854,6 +881,20 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         
         if(Img_carregada){
             try{
+                
+                double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
+                double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
+                
+                String nomeImagem = Img_original.getName();
+                
+                //Solução para remover o .png do meio do texto
+                int posicaoPonto = nomeImagem.lastIndexOf('.');
+                if (posicaoPonto > 0) {
+                    nomeImagem = nomeImagem.substring(0, posicaoPonto);
+                }
+                
+                String tituloJanela = nomeImagem + " Processada - Gamma RGB [c: " + c + ", γ: " + gamma + "]";
+                
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
                 
@@ -869,7 +910,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     imageLabel.setIcon(new javax.swing.ImageIcon(Img_processada));
                     JScrollPane scrollPane = new JScrollPane(imageLabel);
 
-                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma RGB", true, true, true, true);
+                    JInternalFrame novaJanela = new JInternalFrame(tituloJanela, true, true, true, true);
                     novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                     novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
                     novaJanela.getContentPane().add(scrollPane);
