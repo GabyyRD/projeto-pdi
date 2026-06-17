@@ -681,32 +681,55 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         
         JFrame F = new JFrame();
         
-        if(Img_carregada){
-            
-            // Configura e abre uma janela de dialogo.
-            JFileChooser Fs = new JFileChooser(new File(Img_original.getParent()));
-            Fs.setFileFilter(new FileNameExtensionFilter("PNG Images", "png"));
-            Fs.setDialogTitle("Escolha onde salvar a imagem processada...");
-            int Retorno = Fs.showSaveDialog(this);
+        //Identifica qual janela está "clicada" naquele momento.
+        JInternalFrame janelaAtiva = jDesktopPane1.getSelectedFrame();
+        
+        if(Img_carregada && janelaAtiva != null){
+            try {
+                // Extrai a imagem diretamente da janela ativa
+                JScrollPane scrollPane = (JScrollPane) janelaAtiva.getContentPane().getComponent(0);
+                JLabel imageLabel = (JLabel) scrollPane.getViewport().getView();
+                BufferedImage imagemParaSalvar = (BufferedImage) ((javax.swing.ImageIcon) imageLabel.getIcon()).getImage();
 
-            // Seleciona a pasta.
-            if(Retorno == JFileChooser.APPROVE_OPTION){
-                
-                File Fo = new File(Fs.getSelectedFile().getPath() + "_" +(Img_YCbCr ? "YCbCr" : "") + (Img_XYZ ? "XYZ" : "") + (Img_segmentada ? "_Segmentacao" : "") + ".png");
-                
-                try {
+                // Usa o próprio título da janela como nome padrão do arquivo
+                String nomeSugerido = janelaAtiva.getTitle();
+
+                nomeSugerido = nomeSugerido.replace(":", "=").replace("[", "(").replace("]", ")");
+
+                // Configura e abre uma janela de dialogo.
+                JFileChooser Fs = new JFileChooser(new File(Img_original.getParent()));
+                Fs.setFileFilter(new FileNameExtensionFilter("PNG Images", "png"));
+                Fs.setDialogTitle("Escolha onde salvar a imagem processada...");
+
+                // Preenche a caixa de texto do JFileChooser com o nome base
+                Fs.setSelectedFile(new File(nomeSugerido));
+
+                int Retorno = Fs.showSaveDialog(this);
+
+                // Seleciona a pasta.
+                if(Retorno == JFileChooser.APPROVE_OPTION){
+
+                    String caminhoSalvar = Fs.getSelectedFile().getPath();
+
+                    // Garante que a extensão .png estará no final
+                    if (!caminhoSalvar.toLowerCase().endsWith(".png")) {
+                        caminhoSalvar += ".png";
+                    }
+
+                    File Fo = new File(caminhoSalvar);
+
+                    // Salva a imagem que estava na janela
+                    ImageIO.write(imagemParaSalvar, "png", Fo);
                     
-                    ImageIO.write(Img_final_atual, "png", Fo);
-                    Img_YCbCr = Img_XYZ = Img_segmentada = false;
-                    JOptionPane.showMessageDialog(F, "Imagem salva com sucesso.");
-                } catch (IOException ex) {
-                    
-                    JOptionPane.showMessageDialog(F, "Não foi possível salvar a imagem!");
-                    Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(F, "Imagem salva com sucesso!");
                 }
+            } catch (IOException ex) {
+
+                JOptionPane.showMessageDialog(F, "Não foi possível salvar a imagem!");
+                Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);   
             }
         }else{
-            JOptionPane.showMessageDialog(F, "Nenhuma imagem foi carregada!");
+            JOptionPane.showMessageDialog(F, "Nenhuma janela de imagem está selecionada! Clique na imagem que deseja salvar.");
         }
     }//GEN-LAST:event_Salvar_ActionPerformed
      
@@ -773,7 +796,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     nomeImagem = nomeImagem.substring(0, posicaoPonto);
                 }
                 
-                String tituloJanela = nomeImagem + " Processada - Gamma YIQ [c: " + c + ", γ: " + gamma + "]";
+                String tituloJanela = nomeImagem + " Gamma YIQ [c: " + c + ", γ: " + gamma + "]";
                 
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
@@ -839,7 +862,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     nomeImagem = nomeImagem.substring(0, posicaoPonto);
                 }
                 
-                String tituloJanela = nomeImagem + " Processada - Gamma [c: " + c + ", γ: " + gamma + "]";
+                String tituloJanela = nomeImagem + " Gamma [c: " + c + ", γ: " + gamma + "]";
                 
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
@@ -893,7 +916,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     nomeImagem = nomeImagem.substring(0, posicaoPonto);
                 }
                 
-                String tituloJanela = nomeImagem + " Processada - Gamma RGB [c: " + c + ", γ: " + gamma + "]";
+                String tituloJanela = nomeImagem + " Gamma RGB [c: " + c + ", γ: " + gamma + "]";
                 
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
