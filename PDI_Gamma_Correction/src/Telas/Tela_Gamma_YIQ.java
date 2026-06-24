@@ -549,8 +549,6 @@ public class Tela_Gamma_YIQ extends javax.swing.JFrame {
         });
     }
 
-   // public javax.swing.JSpinner Gamma_Value;
-    //public javax.swing.JSpinner C_Value;
     // Variables declaration - do not modify                     
     private javax.swing.JCheckBox Ambos;
     private javax.swing.JCheckBox Cb;

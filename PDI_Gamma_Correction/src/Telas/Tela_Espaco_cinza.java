@@ -329,24 +329,7 @@ public class Tela_Espaco_cinza extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
-//        javax.swing.JDialog F = new javax.swing.JDialog();
-//        
-//        if(Y.isSelected() || Cb.isSelected()   || Cr.isSelected() || 
-//           X.isSelected() || Yxyz.isSelected() || Z.isSelected()){
-//            
-//            if(Y.isSelected() || Cb.isSelected()   || Cr.isSelected())
-//                Deteccao_tipo += 1;
-//            if(X.isSelected() || Yxyz.isSelected() || Z.isSelected())
-//                Deteccao_tipo -= 1;
-//            
-//            if(!lote)
-//                telaPrincipal.Aplicar_SkinDetection_Imagem(this);
-//            else
-//                telaPrincipal.Aplicar_SkinDetection_Lote(this);
-//            this.dispose();
-//        }else{
-//            JOptionPane.showMessageDialog(F, "Nenhuma opção foi selecionada!");
-//        }
+
     }//GEN-LAST:event_ConfirmarActionPerformed
 
     private void YCbCrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YCbCrActionPerformed

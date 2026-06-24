@@ -252,36 +252,6 @@ public class Tela_Principal_ extends javax.swing.JFrame {
 
         Menus.add(Menu_Gamma_RGB_);
         
-//        Menu_Skin_Detection_.setBorder(null);
-//        Menu_Skin_Detection_.setText("Skin Detection");
-//        Menu_Skin_Detection_.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-//        Menu_Skin_Detection_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-//        Menu_Skin_Detection_.setPreferredSize(new java.awt.Dimension(120, 25));
-//
-//        Aplicar_Imagem_.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-//        Aplicar_Imagem_.setText("Aplicar na Imagem");
-//        Aplicar_Imagem_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-//        Aplicar_Imagem_.setPreferredSize(new java.awt.Dimension(150, 25));
-//        Aplicar_Imagem_.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                Aplicar_Imagem_ActionPerformed(evt);
-//            }
-//        });
-//        Menu_Skin_Detection_.add(Aplicar_Imagem_);
-//        Menu_Skin_Detection_.add(jSeparator1);
-//        
-//        Aplicar_Lote_.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-//        Aplicar_Lote_.setText("Aplicar em Lote");
-//        Aplicar_Lote_.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-//        Aplicar_Lote_.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                Aplicar_Lote_ActionPerformed(evt);
-//            }
-//        });
-//        Menu_Skin_Detection_.add(Aplicar_Lote_);
-//
-//        Menus.add(Menu_Skin_Detection_);
-        
         Menu_Segmentacao_.setBorder(null);
         Menu_Segmentacao_.setText("Segmentação");
         Menu_Segmentacao_.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -656,7 +626,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                 
                 JScrollPane scrollPane = new JScrollPane(imageLabel);
                 
-                JInternalFrame novaJanela = new JInternalFrame("Imagem Original", true,true,true,true);
+                JInternalFrame novaJanela = new JInternalFrame(Img_original.getName(), true,true,true,true);
                 novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                 novaJanela.setSize(Img_atual.getWidth(), Img_atual.getHeight());
                 novaJanela.getContentPane().add(scrollPane);
@@ -681,32 +651,55 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         
         JFrame F = new JFrame();
         
-        if(Img_carregada){
-            
-            // Configura e abre uma janela de dialogo.
-            JFileChooser Fs = new JFileChooser(new File(Img_original.getParent()));
-            Fs.setFileFilter(new FileNameExtensionFilter("PNG Images", "png"));
-            Fs.setDialogTitle("Escolha onde salvar a imagem processada...");
-            int Retorno = Fs.showSaveDialog(this);
+        //Identifica qual janela está "clicada" naquele momento.
+        JInternalFrame janelaAtiva = jDesktopPane1.getSelectedFrame();
+        
+        if(Img_carregada && janelaAtiva != null){
+            try {
+                // Extrai a imagem diretamente da janela ativa
+                JScrollPane scrollPane = (JScrollPane) janelaAtiva.getContentPane().getComponent(0);
+                JLabel imageLabel = (JLabel) scrollPane.getViewport().getView();
+                BufferedImage imagemParaSalvar = (BufferedImage) ((javax.swing.ImageIcon) imageLabel.getIcon()).getImage();
 
-            // Seleciona a pasta.
-            if(Retorno == JFileChooser.APPROVE_OPTION){
-                
-                File Fo = new File(Fs.getSelectedFile().getPath() + "_" +(Img_YCbCr ? "YCbCr" : "") + (Img_XYZ ? "XYZ" : "") + (Img_segmentada ? "_Segmentacao" : "") + ".png");
-                
-                try {
+                // Usa o próprio título da janela como nome padrão do arquivo
+                String nomeSugerido = janelaAtiva.getTitle();
+
+                nomeSugerido = nomeSugerido.replace(":", "=").replace("[", "(").replace("]", ")");
+
+                // Configura e abre uma janela de dialogo.
+                JFileChooser Fs = new JFileChooser(new File(Img_original.getParent()));
+                Fs.setFileFilter(new FileNameExtensionFilter("PNG Images", "png"));
+                Fs.setDialogTitle("Escolha onde salvar a imagem processada...");
+
+                // Preenche a caixa de texto do JFileChooser com o nome base
+                Fs.setSelectedFile(new File(nomeSugerido));
+
+                int Retorno = Fs.showSaveDialog(this);
+
+                // Seleciona a pasta.
+                if(Retorno == JFileChooser.APPROVE_OPTION){
+
+                    String caminhoSalvar = Fs.getSelectedFile().getPath();
+
+                    // Garante que a extensão .png estará no final
+                    if (!caminhoSalvar.toLowerCase().endsWith(".png")) {
+                        caminhoSalvar += ".png";
+                    }
+
+                    File Fo = new File(caminhoSalvar);
+
+                    // Salva a imagem que estava na janela
+                    ImageIO.write(imagemParaSalvar, "png", Fo);
                     
-                    ImageIO.write(Img_final_atual, "png", Fo);
-                    Img_YCbCr = Img_XYZ = Img_segmentada = false;
-                    JOptionPane.showMessageDialog(F, "Imagem salva com sucesso.");
-                } catch (IOException ex) {
-                    
-                    JOptionPane.showMessageDialog(F, "Não foi possível salvar a imagem!");
-                    Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(F, "Imagem salva com sucesso!");
                 }
+            } catch (IOException ex) {
+
+                JOptionPane.showMessageDialog(F, "Não foi possível salvar a imagem!");
+                Logger.getLogger(Tela_Principal_.class.getName()).log(Level.SEVERE, null, ex);   
             }
         }else{
-            JOptionPane.showMessageDialog(F, "Nenhuma imagem foi carregada!");
+            JOptionPane.showMessageDialog(F, "Nenhuma janela de imagem está selecionada! Clique na imagem que deseja salvar.");
         }
     }//GEN-LAST:event_Salvar_ActionPerformed
      
@@ -757,10 +750,21 @@ public class Tela_Principal_ extends javax.swing.JFrame {
     
     public void Aplicar_GammaCorrectionYIQ_Imagem(Tela_Gamma_YIQ Tela){
         javax.swing.JDialog F = new javax.swing.JDialog();
-         System.out.println("cheguei no aplica gamma correction");
         if(Img_carregada){
-            System.out.println("passei do if img carregada");
             try{
+                
+                double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
+                double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
+                
+                String nomeImagem = Img_original.getName();
+                
+                //Solução para remover o .png do meio do texto
+                int posicaoPonto = nomeImagem.lastIndexOf('.');
+                if (posicaoPonto > 0) {
+                    nomeImagem = nomeImagem.substring(0, posicaoPonto);
+                }
+                
+                String tituloJanela = nomeImagem + " Gamma YIQ [c: " + c + ", γ: " + gamma + "]";
                 
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
@@ -768,7 +772,6 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                 Img_Gamma = true;
                 Img_C = true;
                 Img_processada_atual = Img_processada;
-                System.out.println("img processada atual = img processada");
                 if(Img_processada_atual == null) {
 
                     JOptionPane.showMessageDialog(F, "Não foi possível aplicar a correção Gamma!");
@@ -782,7 +785,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
 
                     JInternalFrame novaJanela =
                             new JInternalFrame(
-                                "Imagem Processada - Gamma YIQ",
+                                tituloJanela,
                                 true,
                                 true,
                                 true,
@@ -814,6 +817,20 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         
         if(Img_carregada){
             try{
+                
+                double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
+                double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
+                
+                String nomeImagem = Img_original.getName();
+                
+                //Solução para remover o .png do meio do texto
+                int posicaoPonto = nomeImagem.lastIndexOf('.');
+                if (posicaoPonto > 0) {
+                    nomeImagem = nomeImagem.substring(0, posicaoPonto);
+                }
+                
+                String tituloJanela = nomeImagem + " Gamma [c: " + c + ", γ: " + gamma + "]";
+                
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
                 
@@ -829,7 +846,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     imageLabel.setIcon(new javax.swing.ImageIcon(Img_processada));
                     JScrollPane scrollPane = new JScrollPane(imageLabel);
 
-                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma", true, true, true, true);
+                    JInternalFrame novaJanela = new JInternalFrame(tituloJanela, true, true, true, true);
                     novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                     novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
                     novaJanela.getContentPane().add(scrollPane);
@@ -854,6 +871,20 @@ public class Tela_Principal_ extends javax.swing.JFrame {
         
         if(Img_carregada){
             try{
+                
+                double gamma = ((Number) Tela.spinnerGamma.getValue()).doubleValue();
+                double c = ((Number) Tela.spinnerC.getValue()).doubleValue();
+                
+                String nomeImagem = Img_original.getName();
+                
+                //Solução para remover o .png do meio do texto
+                int posicaoPonto = nomeImagem.lastIndexOf('.');
+                if (posicaoPonto > 0) {
+                    nomeImagem = nomeImagem.substring(0, posicaoPonto);
+                }
+                
+                String tituloJanela = nomeImagem + " Gamma RGB [c: " + c + ", γ: " + gamma + "]";
+                
                 // Aplica o algoritmo na copia da imagem atual.
                 BufferedImage Img_processada = Processamento_Imagem_.CriaCopia(Img_atual);
                 
@@ -869,7 +900,7 @@ public class Tela_Principal_ extends javax.swing.JFrame {
                     imageLabel.setIcon(new javax.swing.ImageIcon(Img_processada));
                     JScrollPane scrollPane = new JScrollPane(imageLabel);
 
-                    JInternalFrame novaJanela = new JInternalFrame("Imagem Processada - Gamma RGB", true, true, true, true);
+                    JInternalFrame novaJanela = new JInternalFrame(tituloJanela, true, true, true, true);
                     novaJanela.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
                     novaJanela.setSize(Img_processada.getWidth(), Img_processada.getHeight());
                     novaJanela.getContentPane().add(scrollPane);

@@ -23,7 +23,6 @@ public class Tela_Gamma_RGB extends javax.swing.JFrame {
         this.telaPrincipal = parent;
         this.lote = lote;
         initComponents();
-        System.out.println("CRIANDO GAMMA com lote = " + lote);
     }
 
     /**
@@ -73,7 +72,6 @@ public class Tela_Gamma_RGB extends javax.swing.JFrame {
         setResizable(false);
 
         Confirmar.setText("OK");
-        System.out.println("BOTÃO OK lote = " + lote);
         
         Confirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,119 +89,9 @@ public class Tela_Gamma_RGB extends javax.swing.JFrame {
 
         lblC.setText("Constante C:");
 
-        /*YCbCr.setForeground(new java.awt.Color(0, 0, 204));
-        YCbCr.setSelected(true);
-        YCbCr.setText("Gamma");
-        YCbCr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                YCbCrActionPerformed(evt);
-            }
-        });
-
-        XYZ.setForeground(new java.awt.Color(204, 0, 0));
-        XYZ.setText("C");
-        XYZ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                XYZActionPerformed(evt);
-            }
-        });*/
-
-        /*Ambos.setText("Ambos");
-        Ambos.setToolTipText("");
-        Ambos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AmbosActionPerformed(evt);
-            }
-        });*/
-
-        /*Y.setForeground(new java.awt.Color(0, 0, 204));
-        Y.setSelected(true);
-        Y.setText("Y");
-        Y.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                YActionPerformed(evt);
-            }
-        });
-
-        Cb.setForeground(new java.awt.Color(0, 0, 204));
-        Cb.setSelected(true);
-        Cb.setText("Cb");
-        Cb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CbActionPerformed(evt);
-            }
-        });
-
-        Cr.setForeground(new java.awt.Color(0, 0, 204));
-        Cr.setSelected(true);
-        Cr.setText("Cr");
-        Cr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrActionPerformed(evt);
-            }
-        });
-
-        X.setForeground(new java.awt.Color(204, 0, 0));
-        X.setText("X");
-        X.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                XActionPerformed(evt);
-            }
-        });
-
-        Yxyz.setForeground(new java.awt.Color(204, 0, 0));
-        Yxyz.setText("Y");
-        Yxyz.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                YxyzActionPerformed(evt);
-            }
-        });
-
-        Z.setForeground(new java.awt.Color(204, 0, 0));
-        Z.setText("Z");
-        Z.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ZActionPerformed(evt);
-            }
-        });*/
-
         spinnerGamma.setModel(new javax.swing.SpinnerNumberModel(1.0, 0.1, 10, 0.1));
         spinnerC.setModel(new javax.swing.SpinnerNumberModel(1.0, 0.0, 10.0, 0.1));
         
-        /*Ymin.setModel(new javax.swing.SpinnerNumberModel(85, 0, 255, 1));
-
-        Ymax.setModel(new javax.swing.SpinnerNumberModel(135, 0, 255, 1));
-        Ymax.setToolTipText("");
-
-        Cbmin.setModel(new javax.swing.SpinnerNumberModel(80, 0, 255, 1));
-
-        Cbmax.setModel(new javax.swing.SpinnerNumberModel(180, 0, 255, 1));
-
-        Crmin.setModel(new javax.swing.SpinnerNumberModel(135, 0, 255, 1));
-
-        Crmax.setModel(new javax.swing.SpinnerNumberModel(255, 0, 255, 1));
-
-        Xmin.setModel(new javax.swing.SpinnerNumberModel(120, 0, 255, 1));
-        Xmin.setEnabled(false);
-
-        Xmax.setModel(new javax.swing.SpinnerNumberModel(225, 0, 255, 1));
-        Xmax.setEnabled(false);
-
-        Yxyzmin.setModel(new javax.swing.SpinnerNumberModel(67, 0, 255, 1));
-        Yxyzmin.setEnabled(false);
-
-        Yxyzmax.setModel(new javax.swing.SpinnerNumberModel(220, 0, 255, 1));
-        Yxyzmax.setEnabled(false);
-
-        Zmin.setModel(new javax.swing.SpinnerNumberModel(0, 0, 255, 1));
-        Zmin.setEnabled(false);
-
-        Zmax.setModel(new javax.swing.SpinnerNumberModel(278, 0, 278, 1));
-        Zmax.setEnabled(false);*/
-
-        /*jLabel1.setText("Gamma");
-
-        jLabel2.setText("C");*/
 
         javax.swing.GroupLayout jPanel1Layout =
             new javax.swing.GroupLayout(jPanel1);
@@ -353,27 +241,8 @@ public class Tela_Gamma_RGB extends javax.swing.JFrame {
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {                                          
         javax.swing.JDialog F = new javax.swing.JDialog();
         
-        /*if(Y.isSelected() || Cb.isSelected()   || Cr.isSelected() || 
-           X.isSelected() || Yxyz.isSelected() || Z.isSelected()){
-            
-            if(Y.isSelected() || Cb.isSelected()   || Cr.isSelected())
-                Deteccao_tipo += 1;
-            if(X.isSelected() || Yxyz.isSelected() || Z.isSelected())
-                Deteccao_tipo -= 1;
-            
-            if(!lote)
-                telaPrincipal.Aplicar_SkinDetection_Imagem(this);
-            else
-                telaPrincipal.Aplicar_SkinDetection_Lote(this);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(F, "Nenhuma opção foi selecionada!");
-        }
-        */
         try {
             // pega os valores dos spinners
-            //gamma = (Double) spinnerGamma.getValue();
-            //c = (Double) spinnerC.getValue();
             gamma = ((Number) spinnerGamma.getValue()).doubleValue();
             c = ((Number) spinnerC.getValue()).doubleValue();
            
